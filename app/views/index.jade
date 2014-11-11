@@ -1,0 +1,41 @@
+doctype html
+html(lang='en')
+	head
+		meta(charset="utf-8")
+		title Raine's River of Life
+
+		link(rel='stylesheet' href='//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css')
+		link(rel='stylesheet' href='//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css')
+		link(rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css")
+		link(rel='stylesheet' href='/styles/main.min.css')
+
+	body
+		.container
+			h1 Raine's River of Life 
+				i.fa.fa-line-chart.chart-icon
+			h2 Tracking <b>unselfconsciousness</b> from birth until death
+			#chart
+			.y-axis Unselfconsciousness
+			.time
+				.past Past
+				.present Present
+				.future Future
+			.x-axis Age
+
+		script#hover-label(type='x-handlebars-template')
+			.hover-label
+				p.hover-label-title {{title}}
+				p.hover-label-age
+					b Age: 
+					| {{age}}
+				p.hover-label-value
+					b Unselfconsciousness: 
+					| {{value}}
+				p.hover-label-desc {{description}}
+
+		script(src='//code.jquery.com/jquery-2.1.1.min.js')
+		script(src='//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js')
+		script(src='//cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js')
+		script(src='//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js')
+		script(src='//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js')
+		script(src='/scripts/main.min.js')
