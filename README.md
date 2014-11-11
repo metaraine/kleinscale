@@ -1,6 +1,6 @@
-# riveroflife
-[![Build Status](https://travis-ci.org/metaraine/riveroflife.svg?branch=master)](https://travis-ci.org/metaraine/riveroflife)
-[![NPM version](https://badge.fury.io/js/riveroflife.svg)](http://badge.fury.io/js/riveroflife)
+# kleinscale
+[![Build Status](https://travis-ci.org/metaraine/kleinscale.svg?branch=master)](https://travis-ci.org/metaraine/kleinscale)
+[![NPM version](https://badge.fury.io/js/kleinscale.svg)](http://badge.fury.io/js/kleinscale)
 
 > Naropa, Fall 2014, HG&D, River of Life chart
 
