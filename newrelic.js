@@ -8,11 +8,11 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name : ['APP_NAME'],
+  app_name : ['kleinscale'],
   /**
    * Your New Relic license key.
    */
-  license_key : 'LICENSE_KEY',
+  license_key : process.env.RELIC_KEY,
   logging : {
     /**
      * Level at which to log. 'trace' is most useful to New Relic when diagnosing
