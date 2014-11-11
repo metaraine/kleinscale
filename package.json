@@ -17,9 +17,10 @@
     "browser": "browserify -s $npm_package_name -o browser.js ."
   },
   "dependencies": {
-    "express": "~4",
-    "jade": "~1",
     "body-parser": "~1",
+    "express": "~4",
+    "google-spreadsheet": "^0.2.8",
+    "jade": "~1",
     "newrelic": "~1"
   },
   "devDependencies": {
