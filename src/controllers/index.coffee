@@ -7,16 +7,20 @@ module.exports =
 		sheet.getRows 1, (err, rows)->
 			if(err) then console.log(err); return
 
-			data = {}
+			# constants that help expand out all the survey questions
 			letters = 'abcdefg'
 			times = ['past', 'present', 'ideal']
+
+			# array of klein result objects for each person
+			allKleinResults = []
 
 			# loop through every combination of a.past, a.present, a.ideal, b.past, etc
 			# and create a more sensible nested data structure
 			for row in rows
+				allKleinResults.push personKleinResults = {}
 				for letter in letters
-					data[letter] = {}
+					personKleinResults[letter] = {}
 					for time in times
-						data[letter][time] = +row[letter + '.' + time]
+						personKleinResults[letter][time] = +row[letter + '.' + time]
 
-			res.render 'index', kleinData: data
+			res.render 'index', kleinData: allKleinResults
