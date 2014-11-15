@@ -48,12 +48,11 @@ b {
   font-weight: 300; }
 
 .sub-x-axis {
-  position: relative;
-  color: midgray; }
+  margin: 0 2.6% 0 4.2%; }
 
 .sub-x-axis-item {
-  display: inline;
-  position: absolute; }
+  float: left;
+  text-align: center; }
 
 .hover-label {
   max-width: 300px; }

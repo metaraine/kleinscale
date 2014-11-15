@@ -1,9 +1,13 @@
 (function() {
-  var compileTemplates, init, letters, processKleinData, renderChart, times;
+  var compileTemplates, init, letters, processKleinData, renderChart, times, xLabelsAtoE, xLabelsFtoG;
 
   letters = 'abcdefg';
 
   times = ['past', 'present', 'ideal'];
+
+  xLabelsAtoE = ['Other Sex Only', 'Other Sex Mostly', 'Other Sex Somewhat More', 'Both Sexes Equally', 'Same Sex Somewhat More', 'Same Sex Mostly', 'Same Sex Only'];
+
+  xLabelsFtoG = ['Hetero Only', 'Hetero Mostly', 'Hetero Somewhat More', 'Hetero/Gay or Lesbian Equally', 'Gay or Lesbian Somewhat More', 'Gay or Lesbian Mostly', 'Gay or Lesbian Only'];
 
   compileTemplates = function() {
     return cint.toObject($('.template'), function(el) {
@@ -50,8 +54,12 @@
       title: 'Sexual Attraction',
       yLabel: 'Respondants',
       xLabel: 'Klein Scale',
-      xLeftSubLabel: 'Heterosexual',
-      xRightSubLabel: 'Homosexual'
+      subXLabels: xLabelsAtoE.map(function(label, i) {
+        return {
+          label: label,
+          width: 100 / xLabelsAtoE.length
+        };
+      })
     }));
     return renderChart($('.chart-container', chart), morrisData);
   };

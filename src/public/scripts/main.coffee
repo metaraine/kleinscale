@@ -1,6 +1,8 @@
 # constants for klein data processing
 letters = 'abcdefg'
 times = ['past', 'present', 'ideal']
+xLabelsAtoE = ['Other Sex Only', 'Other Sex Mostly', 'Other Sex Somewhat More', 'Both Sexes Equally', 'Same Sex Somewhat More', 'Same Sex Mostly', 'Same Sex Only']
+xLabelsFtoG = ['Hetero Only', 'Hetero Mostly', 'Hetero Somewhat More', 'Hetero/Gay or Lesbian Equally', 'Gay or Lesbian Somewhat More', 'Gay or Lesbian Mostly', 'Gay or Lesbian Only']
 
 # parse and compile all Handlebars templates into a more convenient object
 compileTemplates = ()->
@@ -61,8 +63,9 @@ init = ()->
 			title: 'Sexual Attraction'
 			yLabel: 'Respondants'
 			xLabel: 'Klein Scale'
-			xLeftSubLabel: 'Heterosexual'
-			xRightSubLabel: 'Homosexual'
+			subXLabels: xLabelsAtoE.map (label, i)->
+				label: label
+				width: 100/xLabelsAtoE.length
 
 	# render the chart using morris
 	renderChart $('.chart-container', chart), morrisData

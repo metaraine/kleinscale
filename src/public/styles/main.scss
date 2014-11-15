@@ -59,13 +59,12 @@ b {
 }
 
 .sub-x-axis {
-	position: relative;
-	color: midgray;
+	margin: 0 2.6% 0 4.2%; // offset about equal to y axis width so that first x sub label starts in the right place
 }
 
 .sub-x-axis-item {
-	display: inline;
-	position: absolute;
+	float: left;
+	text-align: center;
 }
 
 .hover-label {
