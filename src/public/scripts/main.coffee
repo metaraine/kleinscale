@@ -57,7 +57,6 @@ aData = _.pluck(kleinData, 'a')
 talliedAData = cint.tallyProps(aData)
 morrisData = cint.toArray talliedAData, (key, value)->
 	_.extend({klein:key}, value)
-console.log morrisData
 
 # initialize chart
 new Morris.Bar

@@ -71,8 +71,6 @@
     }, value);
   });
 
-  console.log(morrisData);
-
   new Morris.Bar({
     element: 'chart',
     data: morrisData,

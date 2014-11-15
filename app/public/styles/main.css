@@ -47,19 +47,13 @@ b {
   text-align: center;
   font-weight: 300; }
 
-.time {
+.sub-x-axis {
   position: relative;
   color: lightgray; }
 
-.past, .present, .future {
+.sub-x-axis-item {
   display: inline;
   position: absolute; }
-
-.past {
-  left: 15%; }
-
-.future {
-  left: 75%; }
 
 .hover-label {
   max-width: 300px; }
