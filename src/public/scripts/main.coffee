@@ -39,7 +39,7 @@ renderChart = (el, morrisData)->
 		xkey: 'klein'
 		ykeys: times
 		labels: times.map(cint.toTitleCase)
-		lineColors: ['#2ecc71']
+		barColors: ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)']
 		smooth: false
 		resize: true
 		hideHover: true
