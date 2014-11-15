@@ -1,5 +1,7 @@
 (function() {
-  var compileTemplates, init, letters, processKleinData, renderChart, times, xLabelsAtoE, xLabelsFtoG;
+  var colors, compileTemplates, init, letters, processKleinData, renderChart, times, xLabelsAtoE, xLabelsFtoG;
+
+  colors = ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)'];
 
   letters = 'abcdefg';
 
@@ -39,7 +41,7 @@
       xkey: 'klein',
       ykeys: times,
       labels: times.map(cint.toTitleCase),
-      barColors: ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)'],
+      barColors: colors,
       smooth: false,
       resize: true,
       hideHover: true

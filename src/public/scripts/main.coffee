@@ -1,4 +1,5 @@
 # constants for klein data processing
+colors = ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)']
 letters = 'abcdefg'
 times = ['past', 'present', 'ideal']
 xLabelsAtoE = ['Other Sex Only', 'Other Sex Mostly', 'Other Sex Somewhat More', 'Both Sexes Equally', 'Same Sex Somewhat More', 'Same Sex Mostly', 'Same Sex Only']
@@ -39,7 +40,7 @@ renderChart = (el, morrisData)->
 		xkey: 'klein'
 		ykeys: times
 		labels: times.map(cint.toTitleCase)
-		barColors: ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)']
+		barColors: colors
 		smooth: false
 		resize: true
 		hideHover: true
@@ -65,7 +66,7 @@ init = ()->
 			xLabel: 'Klein Scale'
 			subXLabels: xLabelsAtoE.map (label, i)->
 				label: label
-				width: 100/xLabelsAtoE.length
+				width: 100/xLabelsAtoE.length # evenly space them along the x-axis
 
 	# render the chart using morris
 	renderChart $('.chart-container', chart), morrisData
