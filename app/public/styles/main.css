@@ -18,6 +18,9 @@ p {
 b {
   font-weight: 200; }
 
+.page-title {
+  margin-bottom: 50px; }
+
 .container {
   max-width: 900px; }
 
@@ -26,8 +29,10 @@ b {
 
 .chart-container {
   height: 450px;
-  max-height: 100vh;
-  margin-top: 30px; }
+  max-height: 100vh; }
+
+.chart-title {
+  margin-bottom: 0; }
 
 .y-axis {
   -webkit-transform: rotateZ(-90deg);

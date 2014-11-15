@@ -11,13 +11,13 @@ html(lang='en')
 
 	body
 		.container
-			h1 MACCP '17 Klein Scale 
+			h1.page-title MACCP '17 Klein Scale 
 				i.fa.fa-line-chart.chart-icon
 
 			.charts
 
 		script.template(type='x-handlebars-template', data-template-name='chartTemplate')
-			h2 {{title}}
+			h2.chart-title {{title}}
 			.chart-container
 			.y-axis {{yLabel}}
 			.sub-x-axis
