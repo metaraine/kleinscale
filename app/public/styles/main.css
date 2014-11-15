@@ -24,7 +24,7 @@ b {
 .chart-icon {
   color: #2ecc71; }
 
-#chart {
+.chart-container {
   height: 450px;
   max-height: 100vh;
   margin-top: 30px; }
@@ -49,7 +49,7 @@ b {
 
 .sub-x-axis {
   position: relative;
-  color: lightgray; }
+  color: midgray; }
 
 .sub-x-axis-item {
   display: inline;

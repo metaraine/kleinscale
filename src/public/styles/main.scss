@@ -34,7 +34,7 @@ b {
 	color: $emerald;
 }
 
-#chart {
+.chart-container {
 	height: 450px;
 	max-height: 100vh;
 	margin-top: 30px;
@@ -60,7 +60,7 @@ b {
 
 .sub-x-axis {
 	position: relative;
-	color: lightgray;
+	color: midgray;
 }
 
 .sub-x-axis-item {

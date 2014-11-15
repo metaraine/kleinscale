@@ -27,7 +27,12 @@ tap = (f, o)->
 # console.log's the given object and returns the object (for chaining purposes)
 spy = _.partial tap, console.log.bind(console)
 
-templateHoverLabel = Handlebars.compile $('#hover-label').html()
+# parse and compile all Handlebars templates into a more convenient object
+templates = cint.toObject $('.template'), (el)->
+	templateFunction = Handlebars.compile($(el).html())
+	# key: name of the template
+	# value: templating function
+	cint.keyValue($(el).attr('data-template-name'), templateFunction)
 
 ### Example kleinPerson
 {
@@ -58,24 +63,29 @@ talliedAData = cint.tallyProps(aData)
 morrisData = cint.toArray talliedAData, (key, value)->
 	_.extend({klein:key}, value)
 
+chartHtml = templates.chartTemplate
+	title: 'Sexual Attraction'
+	yLabel: 'Respondants'
+	xLabel: 'Klein Scale'
+	xLeftSubLabel: 'Heterosexual'
+	xRightSubLabel: 'Homosexual'
+
+chart = $('<div>')
+	.appendTo('.charts')
+	.html(chartHtml)
+
 # initialize chart
 new Morris.Bar
-	element: 'chart'
+	element: $('.chart-container', chart)
 	data: morrisData
-		# .map mapOverKey _.partial(add, birthYear), 'age', 'year'
-		# .map mapOverKey intoString, 'year'
-	# events: [currentYear.toString()]
-	# eventLineColors: ['lightgray']
 	xkey: 'klein'
 	ykeys: times
 	labels: times.map(cint.toTitleCase)
 	lineColors: ['#2ecc71']
 	smooth: false
-	# postUnits: '%'
 	resize: true
 	hideHover: true
 	# xLabelFormat: (date)->
 		# date.getFullYear() - birthYear
 	# hoverCallback: (index, options, content, row)->
 		# templateHoverLabel row
-

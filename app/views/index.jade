@@ -14,14 +14,19 @@ html(lang='en')
 			h1 Cohort Klein Scale 
 				i.fa.fa-line-chart.chart-icon
 			h2 Results from Klein Scale surveys, MACCP '17, Naropa, Fall 2014
-			#chart
-			.y-axis Number of Respondants
-			.sub-x-axis
-				.sub-x-axis-item(style='left:25%') Heterosexual
-				.sub-x-axis-item(style='left:75%') Homosexual
-			.x-axis Klein Scale
 
-		script#hover-label(type='x-handlebars-template')
+			.charts
+
+		script.template(type='x-handlebars-template', data-template-name='chartTemplate')
+			h3 {{title}}
+			.chart-container
+			.y-axis {{yLabel}}
+			.sub-x-axis
+				.sub-x-axis-item(style='left:25%') {{xLeftSubLabel}}
+				.sub-x-axis-item(style='left:75%') {{xRightSubLabel}}
+			.x-axis {{xLabel}}
+
+		script.template(type='x-handlebars-template', data-template-name='hoverLabel')
 			.hover-label
 				p.hover-label-title {{title}}
 				p.hover-label-age

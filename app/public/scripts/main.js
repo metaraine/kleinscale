@@ -1,5 +1,5 @@
 (function() {
-  var aData, add, addTwo, intoString, letters, mapOverKey, morrisData, roundObjectProperties, roundValue, setValue, spy, talliedAData, tap, templateHoverLabel, times;
+  var aData, add, addTwo, chart, chartHtml, intoString, letters, mapOverKey, morrisData, roundObjectProperties, roundValue, setValue, spy, talliedAData, tap, templates, times;
 
   addTwo = function(x, y) {
     return x + y;
@@ -33,7 +33,11 @@
 
   spy = _.partial(tap, console.log.bind(console));
 
-  templateHoverLabel = Handlebars.compile($('#hover-label').html());
+  templates = cint.toObject($('.template'), function(el) {
+    var templateFunction;
+    templateFunction = Handlebars.compile($(el).html());
+    return cint.keyValue($(el).attr('data-template-name'), templateFunction);
+  });
 
 
   /* Example kleinPerson
@@ -71,8 +75,18 @@
     }, value);
   });
 
+  chartHtml = templates.chartTemplate({
+    title: 'Sexual Attraction',
+    yLabel: 'Respondants',
+    xLabel: 'Klein Scale',
+    xLeftSubLabel: 'Heterosexual',
+    xRightSubLabel: 'Homosexual'
+  });
+
+  chart = $('<div>').appendTo('.charts').html(chartHtml);
+
   new Morris.Bar({
-    element: 'chart',
+    element: $('.chart-container', chart),
     data: morrisData,
     xkey: 'klein',
     ykeys: times,
