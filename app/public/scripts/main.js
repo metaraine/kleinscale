@@ -1,5 +1,5 @@
 (function() {
-  var add, addTwo, intoString, mapOverKey, morrisData, setValue, spy, tap, templateHoverLabel;
+  var aData, add, addTwo, intoString, letters, mapOverKey, morrisData, roundObjectProperties, roundValue, setValue, spy, talliedAData, tap, templateHoverLabel, times;
 
   addTwo = function(x, y) {
     return x + y;
@@ -51,21 +51,34 @@
   }
    */
 
-  morrisData = kleinData.map(function(kleinPerson) {
-    return {
-      klein: kleinPerson.a,
-      past: kleinPerson.a.past,
-      present: kleinPerson.a.present,
-      ideal: kleinPerson.a.ideal
-    };
+  letters = 'abcdefg';
+
+  times = ['past', 'present', 'ideal'];
+
+  roundValue = function(key, value) {
+    return cint.keyValue(key, Math.round(value));
+  };
+
+  roundObjectProperties = _.partial(cint.mapObject, _, roundValue);
+
+  aData = _.pluck(kleinData, 'a').map(roundObjectProperties);
+
+  talliedAData = cint.tallyProps(aData);
+
+  morrisData = cint.toArray(talliedAData, function(key, value) {
+    return _.extend({
+      klein: key
+    }, value);
   });
+
+  console.log(morrisData);
 
   new Morris.Bar({
     element: 'chart',
     data: morrisData,
     xkey: 'klein',
-    ykeys: ['past', 'present', 'ideal'],
-    labels: ['Past', 'Present', 'Ideal'],
+    ykeys: times,
+    labels: times.map(cint.toTitleCase),
     lineColors: ['#2ecc71'],
     smooth: false,
     resize: true,

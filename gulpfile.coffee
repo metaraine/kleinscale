@@ -1,3 +1,4 @@
+fs = 					 require('fs')
 gulp =         require('gulp')
 gutil =        require('gulp-util')
 coffee =       require('gulp-coffee')
@@ -20,6 +21,7 @@ filter =       require('gulp-filter')
 ngAnnotate =   require('gulp-ng-annotate')
 lr =           require('tiny-lr')
 
+bowerrc = JSON.parse(fs.readFileSync('.bowerrc'))
 server = lr()
 
 config =
@@ -41,6 +43,10 @@ config =
 	dest_client_scripts: 'app/public/scripts'
 	js_concat_target: 'main.js'
 	dest_server_scripts: 'app'
+
+	# bower
+	src_bower: bowerrc.directory + '/**/*'
+	dest_bower: 'app/public/scripts/components'
 
 	# plugins
 	# src_plugins: 'src/assets/scripts/plugins/*.js'
@@ -108,7 +114,14 @@ gulp.task 'images', ->
 		.pipe gulp.dest(config.dest_img)
 
 
-# watch html
+# copy bower scripts
+gulp.task 'bower', ->
+	gulp.src(config.src_bower)
+		# .pipe(embedlr())
+		.pipe(gulp.dest(config.dest_bower))
+		.pipe livereload(server)
+
+# copy views
 gulp.task 'views', ->
 	gulp.src(config.src_views)
 		# .pipe(embedlr())
@@ -134,18 +147,20 @@ gulp.task 'default', (callback) ->
 
 	runSequence 'clean', [
 		# 'plugins'
+		'bower'
 		'client_scripts'
 		'server_scripts'
 		'styles'
 		'images'
 		'views'
-	], 'open', callback
+	], callback
 
 	server.listen config.livereload_port
 	# http.createServer(ecstatic(root: 'dist/')).listen config.http_port
 
 	gulp.watch(config.src_sass, ['styles'])._watcher.on 'all', livereload
 	# gulp.watch(config.src_plugins, ['plugins'])._watcher.on 'all', livereload
+	gulp.watch(config.src_bower, ['bower'])._watcher.on 'all', livereload
 	gulp.watch(config.src_client_scripts, ['client_scripts'])._watcher.on 'all', livereload
 	gulp.watch([config.src_all_scripts, '!' + config.src_client_scripts], ['server_scripts'])._watcher.on 'all', livereload
 	gulp.watch(config.src_views, ['views'])._watcher.on 'all', livereload

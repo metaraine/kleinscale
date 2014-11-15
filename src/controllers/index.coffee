@@ -16,7 +16,7 @@ module.exports =
 
 			# loop through every combination of a.past, a.present, a.ideal, b.past, etc
 			# and create a more sensible nested data structure
-			for row in rows
+			for row in rows.slice(1) # ignore extra header row
 				allKleinResults.push personKleinResults = {}
 				for letter in letters
 					personKleinResults[letter] = {}

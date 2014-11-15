@@ -1,0 +1,33 @@
+{
+  "name": "cint",
+  "version": "8.0.1",
+  "homepage": "https://github.com/metaraine/cint",
+  "authors": [
+    "metaraine <raineorshine@gmail.com>"
+  ],
+  "description": "A Javascript utility belt with a focus on Functional Programming.",
+  "main": "cint.js",
+  "keywords": [
+    "functional",
+    "utility",
+    "underscore",
+    "lodash"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "8.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v8.0.1",
+    "commit": "e39114f9847a34241ad94b1b519c02ff66fcd0ee"
+  },
+  "_source": "git://github.com/metaraine/cint.git",
+  "_target": "~8.0.1",
+  "_originalSource": "cint"
+}

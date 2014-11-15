@@ -44,14 +44,20 @@ templateHoverLabel = Handlebars.compile $('#hover-label').html()
 }
 ###
 
+letters = 'abcdefg'
+times = ['past', 'present', 'ideal']
+
 # process kleinData into Morris format
-morrisData = kleinData.map (kleinPerson)->
-	{
-		klein: kleinPerson.a,
-		past: kleinPerson.a.past,
-		present: kleinPerson.a.present,
-		ideal: kleinPerson.a.ideal
-	}
+roundValue = (key, value)-> cint.keyValue(key, Math.round(value))
+roundObjectProperties = _.partial(cint.mapObject, _, roundValue)
+
+aData = _.pluck(kleinData, 'a')
+	.map(roundObjectProperties)
+
+talliedAData = cint.tallyProps(aData)
+morrisData = cint.toArray talliedAData, (key, value)->
+	_.extend({klein:key}, value)
+console.log morrisData
 
 # initialize chart
 new Morris.Bar
@@ -62,8 +68,8 @@ new Morris.Bar
 	# events: [currentYear.toString()]
 	# eventLineColors: ['lightgray']
 	xkey: 'klein'
-	ykeys: ['past', 'present', 'ideal']
-	labels: ['Past', 'Present', 'Ideal']
+	ykeys: times
+	labels: times.map(cint.toTitleCase)
 	lineColors: ['#2ecc71']
 	smooth: false
 	# postUnits: '%'
