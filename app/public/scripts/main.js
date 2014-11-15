@@ -1,15 +1,26 @@
 (function() {
-  var colors, compileTemplates, init, letters, processKleinData, renderChart, times, xLabelsAtoE, xLabelsFtoG;
-
-  colors = ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)'];
+  var colors, compileTemplates, createMorrisChart, init, kleinVariables, letters, processKleinData, renderChart, times, xLabelsAtoE, xLabelsFtoG,
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   letters = 'abcdefg';
+
+  colors = ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)'];
 
   times = ['past', 'present', 'ideal'];
 
   xLabelsAtoE = ['Other Sex Only', 'Other Sex Mostly', 'Other Sex Somewhat More', 'Both Sexes Equally', 'Same Sex Somewhat More', 'Same Sex Mostly', 'Same Sex Only'];
 
   xLabelsFtoG = ['Hetero Only', 'Hetero Mostly', 'Hetero Somewhat More', 'Hetero/Gay or Lesbian Equally', 'Gay or Lesbian Somewhat More', 'Gay or Lesbian Mostly', 'Gay or Lesbian Only'];
+
+  kleinVariables = {
+    a: 'Sexual Attraction',
+    b: 'Sexual Behavior',
+    c: 'Sexual Fantasies',
+    d: 'Emotional Preferences',
+    e: 'Social Preferences',
+    f: 'Hetero or Homo Lifestyle',
+    g: 'Self Identification'
+  };
 
   compileTemplates = function() {
     return cint.toObject($('.template'), function(el) {
@@ -19,10 +30,9 @@
     });
   };
 
-  processKleinData = function(kleinData) {
-    var aData, talliedAData;
-    aData = _.pluck(kleinData, 'a');
-    talliedAData = cint.tallyProps(aData);
+  processKleinData = function(kleinDataObjects) {
+    var talliedAData;
+    talliedAData = cint.tallyProps(kleinDataObjects);
     return cint.toArray(talliedAData, function(key, value) {
       return _.extend({
         klein: key
@@ -30,7 +40,7 @@
     });
   };
 
-  renderChart = function(el, morrisData) {
+  createMorrisChart = function(el, morrisData) {
     return new Morris.Bar({
       element: el,
       data: morrisData,
@@ -44,22 +54,35 @@
     });
   };
 
+  renderChart = function(parent, templateFunction, templateData, morrisData) {
+    var chart;
+    chart = $('<div>').addClass('chart').appendTo(parent).html(templateFunction(templateData));
+    createMorrisChart($('.chart-container', chart), morrisData);
+    return chart;
+  };
+
   init = function() {
-    var chart, morrisData, templates;
+    var kleinVariableLabel, letter, morrisData, templateData, templates, xLabels, _results;
     templates = compileTemplates();
-    morrisData = processKleinData(kleinData);
-    chart = $('<div>').appendTo('.charts').html(templates.chartTemplate({
-      title: 'Sexual Attraction',
-      yLabel: 'Respondants',
-      xLabel: 'Klein Scale',
-      subXLabels: xLabelsAtoE.map(function(label, i) {
-        return {
-          label: label,
-          width: 100 / xLabelsAtoE.length
-        };
-      })
-    }));
-    return renderChart($('.chart-container', chart), morrisData);
+    _results = [];
+    for (letter in kleinVariables) {
+      kleinVariableLabel = kleinVariables[letter];
+      xLabels = __indexOf.call('abcde', letter) >= 0 ? xLabelsAtoE : xLabelsFtoG;
+      templateData = {
+        title: kleinVariableLabel,
+        yLabel: '# of Respondents',
+        xLabel: 'Klein Scale',
+        subXLabels: xLabels.map(function(label, i) {
+          return {
+            label: label,
+            width: 100 / xLabels.length
+          };
+        })
+      };
+      morrisData = processKleinData(_.pluck(kleinData, letter));
+      _results.push(renderChart('.charts', templates.chartTemplate, templateData, morrisData));
+    }
+    return _results;
   };
 
   init();

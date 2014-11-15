@@ -1,9 +1,20 @@
 # constants for klein data processing
-colors = ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)']
 letters = 'abcdefg'
+colors = ['rgb(122, 146, 163)', 'rgb(11, 98, 164)', 'rgb(77, 167, 77)']
 times = ['past', 'present', 'ideal']
+
 xLabelsAtoE = ['Other Sex Only', 'Other Sex Mostly', 'Other Sex Somewhat More', 'Both Sexes Equally', 'Same Sex Somewhat More', 'Same Sex Mostly', 'Same Sex Only']
+
 xLabelsFtoG = ['Hetero Only', 'Hetero Mostly', 'Hetero Somewhat More', 'Hetero/Gay or Lesbian Equally', 'Gay or Lesbian Somewhat More', 'Gay or Lesbian Mostly', 'Gay or Lesbian Only']
+
+kleinVariables =
+	a: 'Sexual Attraction'
+	b: 'Sexual Behavior'
+	c: 'Sexual Fantasies'
+	d: 'Emotional Preferences'
+	e: 'Social Preferences'
+	f: 'Hetero or Homo Lifestyle'
+	g: 'Self Identification'
 
 # parse and compile all Handlebars templates into a more convenient object
 compileTemplates = ()->
@@ -13,19 +24,17 @@ compileTemplates = ()->
 		# value: templating function
 		cint.keyValue($(el).attr('data-template-name'), templateFunction)
 
-# process kleinData into Morris format
-processKleinData = (kleinData)->
-
-	aData = _.pluck(kleinData, 'a')
+# process kleinData of a single data point (attraction, behavior, etc) into Morris format
+processKleinData = (kleinDataObjects)->
 
 	# convert the klein data into a tallied data structure
-	talliedAData = cint.tallyProps(aData)
+	talliedAData = cint.tallyProps(kleinDataObjects)
 
 	# flatten the tallied data into an array of objects, one level deep to be usable by morris
 	cint.toArray talliedAData, (key, value)->
 		_.extend({klein:key}, value)
 
-renderChart = (el, morrisData)->
+createMorrisChart = (el, morrisData)->
 
 	new Morris.Bar
 		element: el
@@ -42,26 +51,42 @@ renderChart = (el, morrisData)->
 		# hoverCallback: (index, options, content, row)->
 			# templateHoverLabel row
 
+# templates out a chart with the given templating function and template data, then renders it in the given parent with the given morris data
+renderChart = (parent, templateFunction, templateData, morrisData)->
+
+	# generate the chart container from the template
+	chart = $('<div>')
+		.addClass('chart')
+		.appendTo(parent)
+		.html(templateFunction(templateData))
+
+	# render the chart using morris
+	createMorrisChart $('.chart-container', chart), morrisData
+
+	chart
+
 init = ()->
 
 	# compile all templates on the page
 	templates = compileTemplates()
 
-	# process the klein data from the server
-	morrisData = processKleinData(kleinData)
+	for letter,kleinVariableLabel of kleinVariables
 
-	# generate the chart container from the template
-	chart = $('<div>')
-		.appendTo('.charts')
-		.html templates.chartTemplate
-			title: 'Sexual Attraction'
-			yLabel: 'Respondants'
+		# data for the handlebars chartTemplate
+		xLabels = if letter in 'abcde' then xLabelsAtoE else xLabelsFtoG
+		templateData =
+			title: kleinVariableLabel
+			yLabel: '# of Respondents'
 			xLabel: 'Klein Scale'
-			subXLabels: xLabelsAtoE.map (label, i)->
+			subXLabels: xLabels.map (label, i)->
 				label: label
-				width: 100/xLabelsAtoE.length # evenly space them along the x-axis
+				width: 100/xLabels.length # evenly space them along the x-axis
 
-	# render the chart using morris
-	renderChart $('.chart-container', chart), morrisData
+		# process the klein data from the server
+		morrisData = processKleinData(_.pluck(kleinData, letter))
+
+		# render the chart
+		renderChart('.charts', templates.chartTemplate, templateData, morrisData)
+
 
 init()

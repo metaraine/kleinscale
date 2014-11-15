@@ -20,7 +20,7 @@ html(lang='en')
 			h2.chart-title {{title}}
 			.chart-container
 			.y-axis {{yLabel}}
-			.sub-x-axis
+			.sub-x-axis.clearfix
 				| {{#each subXLabels}}
 				.sub-x-axis-item(style='width:{{width}}%') {{label}}
 				| {{/each}}
