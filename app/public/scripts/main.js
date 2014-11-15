@@ -20,12 +20,8 @@
   };
 
   processKleinData = function(kleinData) {
-    var aData, roundObjectProperties, roundValue, talliedAData;
-    roundValue = function(key, value) {
-      return cint.keyValue(key, Math.round(value));
-    };
-    roundObjectProperties = _.partial(cint.mapObject, _, roundValue);
-    aData = _.pluck(kleinData, 'a').map(roundObjectProperties);
+    var aData, talliedAData;
+    aData = _.pluck(kleinData, 'a');
     talliedAData = cint.tallyProps(aData);
     return cint.toArray(talliedAData, function(key, value) {
       return _.extend({

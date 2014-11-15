@@ -23,6 +23,6 @@ module.exports =
 					for time in times
 						value = row[letter + '.' + time]
 						if value
-							personKleinResults[letter][time] = +value
+							personKleinResults[letter][time] = Math.round(+value)
 
 			res.render 'index', kleinData: allKleinResults

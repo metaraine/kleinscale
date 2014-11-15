@@ -16,14 +16,7 @@ compileTemplates = ()->
 # process kleinData into Morris format
 processKleinData = (kleinData)->
 
-	# Given a key and value, round the value and return a key:value object pair
-	roundValue = (key, value)-> cint.keyValue(key, Math.round(value))
-
-	# Round all of the klein values
-	roundObjectProperties = _.partial(cint.mapObject, _, roundValue)
-
 	aData = _.pluck(kleinData, 'a')
-		.map(roundObjectProperties)
 
 	# convert the klein data into a tallied data structure
 	talliedAData = cint.tallyProps(aData)

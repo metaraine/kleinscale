@@ -27,7 +27,7 @@
               time = times[_k];
               value = row[letter + '.' + time];
               if (value) {
-                personKleinResults[letter][time] = +value;
+                personKleinResults[letter][time] = Math.round(+value);
               }
             }
           }
