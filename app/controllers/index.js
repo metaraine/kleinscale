@@ -8,7 +8,7 @@
   module.exports = {
     index: function(req, res) {
       return sheet.getRows(1, function(err, rows) {
-        var allKleinResults, letter, letters, personKleinResults, row, time, times, _i, _j, _k, _len, _len1, _len2, _ref;
+        var allKleinResults, letter, letters, personKleinResults, row, time, times, value, _i, _j, _k, _len, _len1, _len2, _ref;
         if (err) {
           console.log(err);
           return;
@@ -25,7 +25,10 @@
             personKleinResults[letter] = {};
             for (_k = 0, _len2 = times.length; _k < _len2; _k++) {
               time = times[_k];
-              personKleinResults[letter][time] = +row[letter + '.' + time];
+              value = row[letter + '.' + time];
+              if (value) {
+                personKleinResults[letter][time] = +value;
+              }
             }
           }
         }

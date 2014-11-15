@@ -21,6 +21,8 @@ module.exports =
 				for letter in letters
 					personKleinResults[letter] = {}
 					for time in times
-						personKleinResults[letter][time] = +row[letter + '.' + time]
+						value = row[letter + '.' + time]
+						if value
+							personKleinResults[letter][time] = +value
 
 			res.render 'index', kleinData: allKleinResults
