@@ -22,10 +22,11 @@ b {
   margin-bottom: 50px; }
 
 .container {
-  max-width: 900px; }
+  max-width: 900px;
+  padding: 0 30px; }
 
 .chart-icon {
-  color: #2ecc71; }
+  color: green; }
 
 .chart {
   margin-bottom: 160px; }
