@@ -62,12 +62,16 @@
   };
 
   init = function() {
-    var kleinVariableLabel, letter, morrisData, templateData, templates, xLabels, _results;
+    var kleinVariableLabel, letter, morrisData, templateData, templates, xLabelSet, xLabels, _results;
     templates = compileTemplates();
     _results = [];
     for (letter in kleinVariables) {
       kleinVariableLabel = kleinVariables[letter];
-      xLabels = __indexOf.call('abcde', letter) >= 0 ? xLabelsAtoE : xLabelsFtoG;
+      morrisData = processKleinData(_.pluck(kleinData, letter));
+      xLabelSet = __indexOf.call('abcde', letter) >= 0 ? xLabelsAtoE : xLabelsFtoG;
+      xLabels = _.pluck(morrisData, 'klein').map(function(n) {
+        return n - 1;
+      }).map(cint.index.bind(null, xLabelSet));
       templateData = {
         title: kleinVariableLabel,
         yLabel: '# of Respondents',
@@ -79,7 +83,6 @@
           };
         })
       };
-      morrisData = processKleinData(_.pluck(kleinData, letter));
       _results.push(renderChart('.charts', templates.chartTemplate, templateData, morrisData));
     }
     return _results;

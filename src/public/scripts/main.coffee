@@ -72,8 +72,16 @@ init = ()->
 
 	for letter,kleinVariableLabel of kleinVariables
 
+		# process the klein data from the server
+		morrisData = processKleinData(_.pluck(kleinData, letter))
+
+		# get the keys of the morrisData to determine the x-axis labels
+		xLabelSet = if letter in 'abcde' then xLabelsAtoE else xLabelsFtoG
+		xLabels = _.pluck(morrisData, 'klein')
+			.map((n)->n-1)
+			.map(cint.index.bind(null, xLabelSet))
+
 		# data for the handlebars chartTemplate
-		xLabels = if letter in 'abcde' then xLabelsAtoE else xLabelsFtoG
 		templateData =
 			title: kleinVariableLabel
 			yLabel: '# of Respondents'
@@ -81,9 +89,6 @@ init = ()->
 			subXLabels: xLabels.map (label, i)->
 				label: label
 				width: 100/xLabels.length # evenly space them along the x-axis
-
-		# process the klein data from the server
-		morrisData = processKleinData(_.pluck(kleinData, letter))
 
 		# render the chart
 		renderChart('.charts', templates.chartTemplate, templateData, morrisData)
