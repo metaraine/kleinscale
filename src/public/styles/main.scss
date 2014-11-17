@@ -20,15 +20,20 @@ h1 {
 }
 
 p {
-	margin: 0;
+	font-size: 18px;
 }
 
 b {
 	font-weight: 200;
 }
 
-.page-title {
+.page-header {
+	border: none;
 	margin-bottom: 50px;
+}
+
+.page-subtitle {
+	text-align: center;
 }
 
 .container {
